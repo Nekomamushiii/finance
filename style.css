@@ -15,23 +15,23 @@
 }
 
 body {
-  color: #555;
+  color: #fff;
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   position: relative;
   height: 100vh;
-  font-weight: 400;
-  background: rgb(17, 43, 66);
+  font-weight: 500;
+  background: rgb(207, 113, 144);
 }
 
 .right {
   float: right;
 }
 .red {
-  color: #ff5049 !important;
+  color: rgb(46, 14, 38) !important;
 }
 .red-focus:focus {
-  border: 1px solid #ff5049 !important;
+  border: 1px solid rgb(46, 14, 38) !important;
 }
 
 /**********************************************
@@ -52,14 +52,14 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff;
+  color: rgb(207, 113, 144);
 }
 
 .budget__title {
   font-size: 25px;
   text-align: center;
   margin-bottom: 10px;
-  font-weight: 300;
+  font-weight: bold;
 }
 
 .budget__value {
@@ -68,7 +68,7 @@ body {
   text-align: center;
   margin-bottom: 25px;
   letter-spacing: 2px;
-  color: #adc4ba;
+  color: rgb(207, 113, 144);
 }
 
 .budget__income,
@@ -80,29 +80,30 @@ body {
 
 .budget__income {
   margin-bottom: 15px;
-  background-color: #07071d;
+  background-color: rgb(207, 113, 144);
 }
 
 .budget__expenses {
-  background-color: rgb(128, 128, 128);
+  background-color: rgb(46, 14, 38);
 }
 
 .budget__income--text,
 .budget__expenses--text {
   float: left;
-  font-size: 13px;
+  font-size: 15px;
   color: #fff;
   margin-top: 2px;
 }
 .budget__expenses--text {
-  color: #07071d;
-  font-weight: bold;
+  color: #fff;
+  font-size: 15px;
 }
 
 .budget__income--value,
 .budget__expenses--value {
   letter-spacing: 1px;
   float: left;
+  color: #fff;
 }
 
 .budget__income--percentage,
@@ -115,7 +116,8 @@ body {
 }
 
 .budget__expenses--percentage {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(78, 20, 20, 0.2);
+  color: #fff;
   text-align: center;
   border-radius: 3px;
 }
@@ -128,7 +130,7 @@ body {
 .add {
   padding: 14px;
   border-bottom: 1px solid #e7e7e7;
-  background-color: rgba(17, 43, 66, 0.8);
+  background-color: rgb(207, 113, 144);
 }
 
 .add__container {
@@ -140,11 +142,12 @@ body {
   width: 55px;
   border: 1px solid #e7e7e7;
   height: 44px;
-  font-size: 18px;
-  color: inherit;
+  font-size: 25px;
+  color: rgb(207, 113, 144);
   background-color: #fff;
+  border-radius: 6px;
   margin-right: 10px;
-  font-weight: 300;
+  font-weight: bold;
   transition: border 0.3s;
 }
 
@@ -152,9 +155,10 @@ body {
 .add__value {
   border: 1px solid #e7e7e7;
   background-color: #fff;
-  color: inherit;
+  color: rgb(207, 113, 144);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: bold;
   padding: 12px 15px;
   margin-right: 10px;
   border-radius: 5px;
@@ -172,7 +176,7 @@ body {
   font-size: 35px;
   background: none;
   border: none;
-  color: #28b9b5;
+  color: #fff;
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
@@ -188,7 +192,7 @@ body {
 .add__description:focus,
 .add__value:focus {
   outline: none;
-  border: 1px solid #28b9b5;
+  border: 1px solid rgb(46, 14, 38);
 }
 
 .add__btn:focus {
@@ -220,10 +224,11 @@ h2 {
 }
 
 .icome__title {
-  color: #28b9b5;
+  color: #fff;
 }
 .expenses__title {
-  color: #ff5049;
+  color: rgb(46, 14, 38);
+  font-weight: bold;
 }
 
 .item {
@@ -236,6 +241,7 @@ h2 {
 }
 .item:nth-child(even) {
   background-color: #f7f7f7;
+  color: rgb(207, 113, 144);
 }
 
 .item__description {
@@ -252,7 +258,9 @@ h2 {
   margin-left: 20px;
   transition: transform 0.3s;
   font-size: 11px;
+  font-weight: bold;
   background-color: #ffdad9;
+
   padding: 3px;
   border-radius: 3px;
   width: 32px;
@@ -261,13 +269,13 @@ h2 {
 
 .income .item__value,
 .income .item__delete--btn {
-  color: #28b9b5;
 }
 
 .expenses .item__value,
 .expenses .item__percentage,
 .expenses .item__delete--btn {
-  color: #ff5049;
+  color: rgb(46, 14, 38);
+  font-weight: bolder;
 }
 
 .item__delete {
@@ -305,7 +313,7 @@ h2 {
 .unpaid {
   background-color: #ffdad9 !important;
   cursor: pointer;
-  color: #ff5049;
+  color: rgb(46, 14, 38);
 }
 
 .unpaid .item__percentage {
