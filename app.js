@@ -105,7 +105,9 @@ var financeController = (function () {
       calculateTotal("inc");
       calculateTotal("exp");
       data.tusuv = data.totals.inc - data.totals.exp;
-      data.huvi = Math.round((data.totals.exp / data.totals.inc) * 100);
+      if (data.totals.inc > 0)
+        data.huvi = Math.round((data.totals.exp / data.totals.inc) * 100);
+      else data.huvi = 0;
     },
     tusviigAvah: function () {
       return {
