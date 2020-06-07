@@ -11,14 +11,52 @@ var uiController = (function () {
     expenseLabel: ".budget__expenses--value",
     percentageLabel: ".budget__expenses--percentage",
     containerDiv: ".container",
+    expensePercentageLabel: ".item__percentage",
+    dateLabel: ".budget__title--month",
+  };
+  var nodeListForeach = function (list, callback) {
+    for (var i = 0; i < list.length; i++) {
+      callback(list[i], i);
+    }
+  };
+  var formatMoney = function (too, type) {
+    too = "" + too;
+    var x = too.split("").reverse().join("");
+    var y = "";
+    var count = 1;
+    for (var i = 0; i < x.length; i++) {
+      y = y + x[i];
+      if (count % 3 === 0) y = y + ".";
+      count++;
+    }
+    var z = y.split("").reverse().join("");
+    if (z[0] === ".") z = z.substr(1, z.length - 1);
+    if (type === "inc") z = "+ " + z;
+    else z = "- " + z;
+    return z;
   };
   return {
+    displayDate: function () {
+      var unuudur = new Date();
+      document.querySelector(DOMstring.dateLabel).textContent =
+        unuudur.getFullYear() + " оны " + unuudur.getMonth() + " сарын ";
+    },
     getInput: function () {
       return {
         type: document.querySelector(DOMstring.inputType).value,
         description: document.querySelector(DOMstring.inputDescription).value,
         value: parseInt(document.querySelector(DOMstring.inputValue).value),
       };
+    },
+    displayPercentages: function (allPercentages) {
+      var elements = document.querySelectorAll(
+        DOMstring.expensePercentageLabel
+      );
+      nodeListForeach(elements, function (el, index) {
+        if (allPercentages[index] > 0)
+          el.textContent = allPercentages[index] + "%";
+        else el.textContent = 0;
+      });
     },
     getDOMstring: function () {
       return DOMstring;
@@ -35,11 +73,22 @@ var uiController = (function () {
       fieldsArr[0].focus();
     },
     tusviigUzuuleh: function (tusuv) {
-      document.querySelector(DOMstring.tusuvLabel).textContent = tusuv.tusuv;
-      document.querySelector(DOMstring.incomeLabel).textContent =
-        tusuv.totalInc;
-      document.querySelector(DOMstring.expenseLabel).textContent =
-        tusuv.totalExp;
+      var type;
+      if (tusuv.tusuv > 0) type = "inc";
+      else type = "exp";
+
+      document.querySelector(DOMstring.tusuvLabel).textContent = formatMoney(
+        tusuv.tusuv,
+        type
+      );
+      document.querySelector(DOMstring.incomeLabel).textContent = formatMoney(
+        tusuv.totalInc,
+        "inc"
+      );
+      document.querySelector(DOMstring.expenseLabel).textContent = formatMoney(
+        tusuv.totalExp,
+        "exp"
+      );
       if (tusuv.huvi !== 0) {
         document.querySelector(DOMstring.percentageLabel).textContent =
           tusuv.huvi + "%";
@@ -65,7 +114,7 @@ var uiController = (function () {
       }
       html = html.replace("$$ID", item.id);
       html = html.replace("$$DESCRIPTION$$", item.description);
-      html = html.replace("$$VALUE$$", item.value);
+      html = html.replace("$$VALUE$$", formatMoney(item.value, type));
       document.querySelector(list).insertAdjacentHTML("beforeend", html);
     },
   };
@@ -80,6 +129,15 @@ var financeController = (function () {
     this.id = id;
     this.description = description;
     this.value = value;
+    this.percentage = -1;
+  };
+  Expense.prototype.calcPercentage = function (totalIncome) {
+    if (totalIncome > 0)
+      this.percentage = Math.round((this.value / totalIncome) * 100);
+    else this.percentage = 0;
+  };
+  Expense.prototype.getPercentage = function () {
+    return this.percentage;
   };
   var calculateTotal = function (type) {
     var sum = 0;
@@ -108,6 +166,17 @@ var financeController = (function () {
       if (data.totals.inc > 0)
         data.huvi = Math.round((data.totals.exp / data.totals.inc) * 100);
       else data.huvi = 0;
+    },
+    calculataPercentages: function () {
+      data.items.exp.forEach(function (el) {
+        el.calcPercentage(data.totals.inc);
+      });
+    },
+    getPercentages: function () {
+      var allPercentages = data.items.exp.map(function (el) {
+        return el.getPercentage();
+      });
+      return allPercentages;
     },
     tusviigAvah: function () {
       return {
@@ -162,6 +231,9 @@ var appController = (function (m1, m2) {
     var tusuv = m2.tusviigAvah();
     m1.tusviigUzuuleh(tusuv);
     console.log(tusuv);
+    m2.calculataPercentages();
+    var allPercentages = m2.getPercentages();
+    m1.displayPercentages(allPercentages);
   };
   var setUpEventListeners = function () {
     var DOM = m1.getDOMstring();
@@ -191,6 +263,7 @@ var appController = (function (m1, m2) {
   return {
     init: function () {
       console.log("app started");
+      m1.displayDate();
       m1.tusviigUzuuleh({
         tusuv: 0,
         huvi: 0,
